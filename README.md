@@ -7,8 +7,11 @@
 Locate the Ngrok [endpoint](https://dashboard.ngrok.com/endpoint) you will see like this after copy the Url
 ![endpoint](https://telegra.ph/file/08ed31240c792262a91f5.jpg)
 
-- Connect with ssh
+- Acces Via Website
+![endpoint](https://telegra.ph/file/6d6bc2159ec1fa0cc14d3.jpg)
+Find in logs that contains domain **trycloudflare.com**
 
+- Connect with ssh
 ### Exampel : 
 `ssh root@6.tcp.ngrok.io -p 19202`
 You need to replace your own url and port
