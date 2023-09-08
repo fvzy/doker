@@ -1,13 +1,3 @@
-# This Dockerfile original by : Kali-Linux-VPS ( search on github )
-# Modifed by : Ditzzy ( Just adding some command to support the vps )
-# So it can run on any cloud with docker & gotty so that the normal website is detected
-# Please don't change anything other than the NGROK & Password contents to avoid errors
-
-
-
-
-
-
 # Use kalilinux/kali-rolling as the base image
 FROM kalilinux/kali-rolling
 
@@ -45,9 +35,12 @@ RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config  # Allow password 
 RUN echo root:${Password}|chpasswd # Set root password
 RUN service ssh start
 RUN chmod 755 /kali.sh
+RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+RUN cp ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
+RUN chmod +x /usr/local/bin/cloudflared
 
 # Expose ports
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
 
 # Start the shell script and gotty on container startup using a shell
-CMD /bin/sh -c "/kali.sh & gotty -p 8080 -w /bin/bash"
+CMD /bin/sh -c "cloudflared tunnel --url tcp://localhost:22 --url http://localhost:80 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"
