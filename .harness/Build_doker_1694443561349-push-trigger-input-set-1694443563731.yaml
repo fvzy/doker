@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_doker_1694443561349-push-trigger-input-set
+  identifier: Build_doker_1694443561349pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_doker_1694443561349
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
