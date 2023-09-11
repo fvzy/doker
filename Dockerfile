@@ -9,7 +9,7 @@ RUN apt update -y > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1 && apt ins
 ENV LANG en_US.utf8
 
 # Define NGROK & SSH password
-ARG NGROK_TOKEN="2DtZEdhpCglWP39cSXxPntjBU9E_5ktNAyAotNTerbji8nbfH"
+ARG TOKEN="2DtZEdhpCglWP39cSXxPntjBU9E_5ktNAyAotNTerbji8nbfH"
 ARG Password="Ditzzy"
 
 # Install ssh, wget, and unzip
@@ -18,20 +18,14 @@ RUN apt install ssh wget unzip -y > /dev/null 2>&1
 # Download and unzip ngrok
 RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.zip > /dev/null 2>&1
 RUN unzip ngrok.zip
-RUN chmod +x ngrok && mv ngrok /usr/bin/
 
 # Add Package gotty to be able to run the web interface so that the deploy is successful
 RUN curl -sSLo gotty https://raw.githubusercontent.com/afnan007a/Replit-Vm/main/gotty
 RUN chmod +x gotty && mv gotty /usr/bin/
 
 # Create shell script
-RUN echo "ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
-#RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
-#RUN echo "./ngrok 5901 22 &>/dev/null &" >>/kali.sh
-RUN DEBIAN_FRONTEND=noninteractive apt install -y xfce4 xfce4-goodies x11vnc xvfb 
-RUN mkdir ~/.vnc
-RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
-
+RUN echo "./ngrok config add-authtoken ${TOKEN} &&" >>/kali.sh
+RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
 
 # Create directory for SSH daemon's runtime files
 RUN mkdir /run/sshd
@@ -46,8 +40,7 @@ RUN cp ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
 RUN chmod +x /usr/local/bin/cloudflared
 
 # Expose ports
-EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
-COPY ./entrypoint.sh /entrypoint.sh
-CMD ["/bin/bash", "/entrypoint.sh"]
+EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306 55376
+
 # Start the shell script and gotty on container startup using a shell
-#CMD /bin/sh -c "cloudflared tunnel --url tcp://localhost:22 --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"
+CMD /bin/sh -c "cloudflared tunnel --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"
