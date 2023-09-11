@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_doker_1694443561349-pr-trigger-input-set
+  identifier: Build_doker_1694443561349prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_doker_1694443561349
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
