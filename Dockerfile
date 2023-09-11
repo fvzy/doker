@@ -25,8 +25,8 @@ RUN chmod +x gotty && mv gotty /usr/bin/
 
 # Create shell script
 RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
-RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
-RUN echo "./ngrok 5901 22 &>/dev/null &" >>/kali.sh
+#RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
+#RUN echo "./ngrok 5901 22 &>/dev/null &" >>/kali.sh
 RUN DEBIAN_FRONTEND=noninteractive apt install -y xfce4 xfce4-goodies x11vnc xvfb 
 RUN mkdir ~/.vnc
 RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
