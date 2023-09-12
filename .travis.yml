@@ -1,0 +1,13 @@
+language: bash
+
+services:
+  - docker
+
+before_install:
+  - docker --version
+
+script:
+  - docker pull quay.io/ditzzsenpai/zyau:latest
+  - docker run -d -p 8080:8080 quay.io/ditzzsenpai/zyau:latest
+  - sleep 3 # Tunggu beberapa detik agar kontainer dapat berjalan
+   # Gantilah ini dengan perintah uji yang sesuai
