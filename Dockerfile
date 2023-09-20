@@ -43,4 +43,4 @@ RUN chmod +x /usr/local/bin/cloudflared
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306 55376
 
 # Start the shell script and gotty on container startup using a shell
-CMD /bin/sh -c "cloudflared tunnel --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"
+CMD /bin/sh -c "ssh -R 80:localhost:8080 localhost.run & /kali.sh & gotty -p 8080 -w /bin/bash"
