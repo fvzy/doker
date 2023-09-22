@@ -9,7 +9,7 @@ RUN apt update -y > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1 && apt ins
 ENV LANG en_US.utf8
 
 # Define NGROK & SSH password
-ARG TOKEN="2DtZEdhpCglWP39cSXxPntjBU9E_5ktNAyAotNTerbji8nbfH"
+ARG NGROK_TOKEN="2DtZEdhpCglWP39cSXxPntjBU9E_5ktNAyAotNTerbji8nbfH"
 ARG Password="Ditzzy"
 
 # Install ssh, wget, and unzip
@@ -24,7 +24,7 @@ RUN curl -sSLo gotty https://raw.githubusercontent.com/afnan007a/Replit-Vm/main/
 RUN chmod +x gotty && mv gotty /usr/bin/
 
 # Create shell script
-RUN echo "./ngrok config add-authtoken ${TOKEN} &&" >>/kali.sh
+RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
 RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
 
 # Create directory for SSH daemon's runtime files
@@ -40,7 +40,8 @@ RUN cp ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
 RUN chmod +x /usr/local/bin/cloudflared
 
 # Expose ports
-EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306 55376
-
+EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
+COPY ./entrypoint.sh /entrypoint.sh
+CMD ["/bin/bash", "/entrypoint.sh"]
 # Start the shell script and gotty on container startup using a shell
-CMD /bin/sh -c "ssh -R 80:localhost:8080 localhost.run & /kali.sh & gotty -p 8080 -w /bin/bash"
+#CMD /bin/sh -c "cloudflared tunnel --url tcp://localhost:22 --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"
