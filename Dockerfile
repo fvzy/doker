@@ -45,7 +45,7 @@ EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
 #RUN chmod +x /usr/bin/entrypoint.sh
 #ENTRYPOINT ["entrypoint.sh"]
 # Start the shell script and gotty on container startup using a shell
-#CMD /bin/sh -c "cloudflared tunnel --url --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"
-CMD ["/bin/sh", "-c", "cloudflared tunnel --url --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"]
+CMD /bin/sh -c "/kali.sh & gotty -p 8080 -w /bin/bash"
+#CMD ["/bin/sh", "-c", "cloudflared tunnel --url --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"]
 
 
