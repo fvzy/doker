@@ -9,7 +9,7 @@ RUN apt update -y > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1 && apt ins
 ENV LANG en_US.utf8
 
 # Define NGROK & SSH password
-ARG NGROK_TOKEN="2DtZEdhpCglWP39cSXxPntjBU9E_5ktNAyAotNTerbji8nbfH"
+ARG NGROK_TOKEN="2A0URlDUw7eukFNE1AgSndmTXpc_7rF456g8KPtn9SUUdnk5W"
 ARG Password="Ditzzy"
 
 # Install ssh, wget, and unzip
