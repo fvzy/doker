@@ -30,7 +30,7 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
 # Set the working directory for your Node.js application
-WORKDIR /app
+WORKDIR /
 
 
 # Copy your package.json and package-lock.json to the container
