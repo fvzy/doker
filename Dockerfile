@@ -33,7 +33,7 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 WORKDIR /app
 
 # Copy your package.json and package-lock.json to the container
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 # Install Node.js dependencies
 RUN npm install
