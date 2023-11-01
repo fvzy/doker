@@ -19,11 +19,29 @@ RUN apt install ssh wget unzip -y > /dev/null 2>&1
 RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.zip > /dev/null 2>&1
 RUN unzip ngrok.zip
 
-# Add Package gotty to be able to run the web interface so that the deploy is successful
-RUN curl -sSLo gotty https://raw.githubusercontent.com/afnan007a/Replit-Vm/main/gotty
-RUN chmod +x gotty && mv gotty /usr/bin/
+# Install ssh, wget, unzip, and Node.js
+RUN apt install ssh wget unzip -y > /dev/null 2>&1
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor -o /usr/share/keyrings/nodesource-archive-keyring.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/nodesource-archive-keyring.gpg] https://deb.nodesource.com/node_16.x focal main" | tee /etc/apt/sources.list.d/nodesource.list > /dev/null
+RUN echo "deb-src [signed-by=/usr/share/keyrings/nodesource-archive-keyring.gpg] https://deb.nodesource.com/node_16.x focal main" | tee -a /etc/apt/sources.list.d/nodesource.list > /dev/null
+RUN apt-get update && apt-get install -y nodejs
 
-# Create shell script
+# Set the working directory for your Node.js application
+WORKDIR /app
+
+# Copy your package.json and package-lock.json to the container
+COPY package.json package-lock.json ./
+
+# Install Node.js dependencies
+RUN npm install
+
+# Copy the rest of your application files to the container
+COPY . .
+
+# Create shell script to start the Node.js application
+RUN echo "npm start app.js &" >> /kali.sh
+
+# Create directory for SSH daemon's runtime files
 RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
 RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
 
@@ -35,17 +53,9 @@ RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config  # Allow password 
 RUN echo root:${Password}|chpasswd # Set root password
 RUN service ssh start
 RUN chmod 755 /kali.sh
-RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
-RUN cp ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
-RUN chmod +x /usr/local/bin/cloudflared
 
 # Expose ports
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
-#COPY entrypoint.sh /usr/bin/
-#RUN chmod +x /usr/bin/entrypoint.sh
-#ENTRYPOINT ["entrypoint.sh"]
+
 # Start the shell script and gotty on container startup using a shell
-CMD /bin/sh -c "/kali.sh & gotty -p 8080 -w /bin/bash"
-#CMD ["/bin/sh", "-c", "cloudflared tunnel --url --url http://localhost:8080 --hostname trycloudflare.com & /kali.sh & gotty -p 8080 -w /bin/bash"]
-
-
+CMD /bin/sh -c "/kali.sh"
