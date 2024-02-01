@@ -65,5 +65,5 @@ RUN chmod +x /usr/local/bin/cloudflared
 # Expose ports
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
 
-# Start the shell script and gotty on container startup using a shell
-CMD /bin/sh -c "/kali.sh"
+COPY ./entrypoint.sh /entrypoint.sh
+CMD ["/bin/sh", "/entrypoint.sh"]
