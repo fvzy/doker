@@ -43,7 +43,7 @@ RUN npm install
 COPY . .
 
 # Create shell script to start the Node.js application
-RUN echo "npm start app.js &" >> /kali.sh
+RUN echo "node app.js &" >> /kali.sh
 
 # Create directory for SSH daemon's runtime files
 #RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
