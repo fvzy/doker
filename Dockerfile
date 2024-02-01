@@ -46,8 +46,8 @@ COPY . .
 RUN echo "npm start app.js &" >> /kali.sh
 
 # Create directory for SSH daemon's runtime files
-RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
-RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
+#RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
+#RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
 
 # Create directory for SSH daemon's runtime files
 RUN mkdir /run/sshd
