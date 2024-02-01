@@ -60,6 +60,8 @@ RUN chmod 755 /kali.sh
 RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
 RUN cp ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
 RUN chmod +x /usr/local/bin/cloudflared
+RUN curl -sSLo gotty https://raw.githubusercontent.com/afnan007a/Replit-Vm/main/gotty
+RUN chmod +x gotty && mv gotty /usr/bin/
 
 
 # Expose ports
