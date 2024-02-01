@@ -64,6 +64,6 @@ RUN chmod +x /usr/local/bin/cloudflared
 
 # Expose ports
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
-
+RUN chmod 755 ./entrypoint.sh
 COPY ./entrypoint.sh /entrypoint.sh
 CMD ["/bin/sh", "/entrypoint.sh"]
