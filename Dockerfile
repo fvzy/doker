@@ -57,6 +57,10 @@ RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config  # Allow password 
 RUN echo root:${Password}|chpasswd # Set root password
 RUN service ssh start
 RUN chmod 755 /kali.sh
+RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+RUN cp ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
+RUN chmod +x /usr/local/bin/cloudflared
+
 
 # Expose ports
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
