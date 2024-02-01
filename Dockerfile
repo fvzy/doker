@@ -34,16 +34,16 @@ WORKDIR /
 
 
 # Copy your package.json and package-lock.json to the container
-COPY package.json ./
+#COPY package.json ./
 
 # Install Node.js dependencies
-RUN npm install
+#RUN npm install
 
 # Copy the rest of your application files to the container
 COPY . .
 
 # Create shell script to start the Node.js application
-RUN echo "node app.js &" >> /kali.sh
+#RUN echo "node app.js &" >> /kali.sh
 
 # Create directory for SSH daemon's runtime files
 #RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
