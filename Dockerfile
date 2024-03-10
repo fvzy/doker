@@ -67,4 +67,4 @@ RUN cd /tmp/ && \
 RUN chmod +x /usr/local/bin/gotty
 # Expose ports
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
-CMD /bin/sh -c "/kali.sh & gotty -p 8080 -w /bin/bash &>/dev/null & cloudflared tunnel --url http://localhost:8080 --hostname trycloudflare.com"
+CMD /bin/bash -c "/kali.sh & gotty -p 8080 -w /bin/bash &>/dev/null & cloudflared tunnel --url http://localhost:8080 --hostname trycloudflare.com"
