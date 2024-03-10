@@ -1,5 +1,5 @@
 # Use kalilinux/kali-rolling as the base image
-FROM kalilinux/kali-rolling
+FROM ubuntu:latest
 
 ARG DEBIAN_FRONTEND=noninteractive
 # Update packages and install locales
