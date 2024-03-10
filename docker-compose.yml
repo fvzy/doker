@@ -2,16 +2,9 @@ version: "3.9"
 services:
   web:
     build: .
-    ports:
-      - "8080:8080"
     volumes:
       - .:/code
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/host
-      - logvolume01:/var/log
-    links:
-      - redis
-  redis:
-    image: redis
-volumes:
-  logvolume01: {}
+     ports:
+      - "8080:8080"
