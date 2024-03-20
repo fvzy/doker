@@ -8,4 +8,4 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/host
     ports:
-      - "8080:8080"
+      - "8111:8080"
